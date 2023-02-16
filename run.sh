@@ -20,7 +20,6 @@ showMenu() {
       ;;
     "CHECK")
       echo "According to NationalTacoDay.com, Americans are eating 4.5 billion $fav each year."
-      break
       ;;
     "EXIT")
       echo "User requested exit"

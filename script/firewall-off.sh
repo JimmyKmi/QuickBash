@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # 关闭所有防火墙
-echo "关闭防火墙后系统可能会遭到网络攻击，如果使用云服务器请设置安全组。"
 if [ -f /etc/lsb-release ]; then
   # Ubuntu
   sudo ufw disable
@@ -24,4 +23,5 @@ else
   exit 1
 fi
 
-echo "防火墙已永久禁用"
+echo "防火墙已禁用"
+echo "关闭防火墙后系统可能会遭到网络攻击，如果使用云服务器请设置安全组。"
