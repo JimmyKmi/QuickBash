@@ -1,5 +1,6 @@
 # QuickBash 懒虫专用回车
 
+>该项目仍在开发阶段，使用前请仔细阅读脚本
 ## 起源
 
 > 一切源于懒
@@ -22,3 +23,6 @@
 | docker       | 3.2104 LTS x64 | --        | --       | --     | --     |
 | portainer    | 3.2104 LTS x64 | --        | --       | --     | --     |
 | firewall-off | 3.2104 LTS x64 | --        | --       | --     | --     |
+
+## 如何使用
+> curl -sSO https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/run.sh && bash run.sh
