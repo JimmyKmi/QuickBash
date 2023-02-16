@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 常用变量
-#SRC_PATH='https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/'
+SRC_PATH='https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/'
 
 # 执行程序
 run() {
