@@ -11,10 +11,7 @@ CLR_GREEN='\033[0;32m' # 绿色
 #CLR_WHITE='\033[0;37m'      # 白色
 CLR_='\033[0m' # 重置颜色
 # DEMO
-echo -e "${CLR_BLACK}这是黑色文本${CLR_}"
-#
-# 获取管理员权限
-sudo -i
+#echo -e "${CLR_BLACK}这是黑色文本${CLR_}"
 
 # 菜单
 echo -e "${CLR_GREEN}JIMMY BASH ==${CLR_}"
