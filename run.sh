@@ -50,6 +50,3 @@ case $choice in
   echo "无效的选项，请重新选择。"
   ;;
 esac
-
-# 退出管理员权限
-exit
