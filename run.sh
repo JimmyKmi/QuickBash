@@ -51,7 +51,5 @@ case $choice in
   ;;
 esac
 
-rm run.sh -f
-
 # 退出管理员权限
 exit
