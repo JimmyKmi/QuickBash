@@ -20,7 +20,7 @@ menuMain() {
       ;;
     "安装程序")
       PS3='安装程序>'
-      menu=("安装 DOCKER" "安装 PORTAINER" "返回")
+      menu=("安装 DOCKER-CE" "安装 DOCKER-CE & PORTAINER-CE" "返回")
       select fav in "${menu[@]}"; do
         case $fav in
         "安装 DOCKER-CE")
