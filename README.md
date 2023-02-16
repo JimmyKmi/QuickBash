@@ -25,4 +25,4 @@
 | firewall-off | 3.2104 LTS x64 | --        | --       | --     | --     |
 
 ## 如何使用
-> curl -sSO https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/run.sh && bash run.sh
+> curl -sSO https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/run.sh && bash run.sh && rm run.sh -f
