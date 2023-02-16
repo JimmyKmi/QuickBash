@@ -24,9 +24,14 @@ menuMain() {
       select fav in "${menu[@]}"; do
         case $fav in
         "安装 DOCKER-CE")
+          run env
+          run firewall-off
           run docker-ce-install
           ;;
-        "安装 PORTAINER-CE")
+        "安装 DOCKER-CE & PORTAINER-CE")
+          run env
+          run firewall-off
+          run docker-ce-install
           run portainer-ce-install
           ;;
         "返回")
