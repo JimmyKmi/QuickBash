@@ -12,14 +12,14 @@ CLR_GREEN='\033[0;32m'      # 绿色
 CLR_='\033[0m'              # 重置颜色
 # DEMO
 # echo -e "${CLR_BLACK}这是黑色文本${CLR_}"
-
-# 检查是否为管理员权限的用户
-if [ "$(id -u)" != "0" ]; then
-    echo "请以管理员权限运行 =。=!"
-    exit 1
-fi
-# 获取管理员权限
-sudo -i
+#
+## 检查是否为管理员权限的用户
+#if [ "$(id -u)" != "0" ]; then
+#    echo "请以管理员权限运行 =。=!"
+#    exit 1
+#fi
+## 获取管理员权限
+#sudo -i
 
 # 菜单
 echo "${CLR_GREEN}JIMMY BASH ==${CLR_}"
