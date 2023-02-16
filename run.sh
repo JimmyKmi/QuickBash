@@ -58,5 +58,6 @@ echo "4. 退出"
 
 rm run.sh -y
 
+
 # 退出管理员权限
 exit
