@@ -19,7 +19,7 @@ if [ "$(id -u)" != "0" ]; then
     exit 1
 fi
 # 获取管理员权限
-sudo -i
+#sudo -i
 
 # 菜单
 echo "${CLR_GREEN}JIMMY BASH ==${CLR_}"
