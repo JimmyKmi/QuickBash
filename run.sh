@@ -5,7 +5,7 @@
 
 # 执行程序
 run() {
-  curl -sSO "${SRC_PATH}/script/$1.sh" && bash "$1.sh" && rm "$1.sh" -f
+  curl -sSO ${SRC_PATH}/script/$1.sh && bash $1.sh && rm $1.sh -f
 }
 
 # 主菜单
