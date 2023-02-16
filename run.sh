@@ -5,7 +5,8 @@
 
 # 执行程序
 run() {
-  curl -sSO ${SRC_PATH}/script/$1.sh && bash $1.sh && rm $1.sh -f
+  # shellcheck disable=SC2086
+  curl -sSO ${SRC_PATH}/script/"$1".sh && bash "$1".sh && rm "$1".sh -f
 }
 
 # 主菜单
