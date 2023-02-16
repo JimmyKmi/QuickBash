@@ -7,22 +7,36 @@ run() {
 }
 
 # 主菜单
-showMenu() {
+menuMain() {
   PS3='>'
-  menu=("软件更新 + 基础环境配置" "关闭防火墙" "CHECK" "EXIT")
+  menu=("更新环境、安装必备程序" "关闭防火墙" "安装程序" "退出")
   select fav in "${menu[@]}"; do
     case $fav in
     "更新环境、安装必备程序")
-      echo "Americans eat roughly 100 acres of $fav each day!"
+      run env
       ;;
     "关闭防火墙")
       run firewall-off
       ;;
-    "CHECK")
-      echo "According to NationalTacoDay.com, Americans are eating 4.5 billion $fav each year."
+    "安装程序")
+      PS3='安装程序>'
+      menu=("安装 DOCKER" "安装 PORTAINER" "返回")
+      select fav in "${menu[@]}"; do
+        case $fav in
+        "安装 DOCKER-CE")
+          run docker-ce-install
+          ;;
+        "安装 PORTAINER-CE")
+          run portainer-ce-install
+          ;;
+        "返回")
+          break
+          ;;
+        *) echo "VALUE [$REPLY] UNAVAILABLE" ;;
+        esac
+      done
       ;;
-    "EXIT")
-      echo "User requested exit"
+    "退出")
       exit
       ;;
     *) echo "VALUE [$REPLY] UNAVAILABLE" ;;
@@ -31,4 +45,4 @@ showMenu() {
 }
 
 # 展示主菜单
-showMenu
+menuMain
