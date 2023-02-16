@@ -5,11 +5,11 @@ SRC_PATH='https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/'
 
 # 主菜单
 showMenu() {
-  echo "=============MENU=============="
   PS3='>'
   menu=("SYSTEM" "DEPLOY" "CHECK" "EXIT")
-#  foods=("SYSTEM" "DEPLOY" "CHECK" "EXIT")
+  #  foods=("SYSTEM" "DEPLOY" "CHECK" "EXIT")
   select fav in "${menu[@]}"; do
+    echo "=============MENU=============="
     case $fav in
     "SYSTEM")
       echo "Americans eat roughly 100 acres of $fav each day!"
