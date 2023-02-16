@@ -18,11 +18,11 @@ CLR_='\033[0m'              # 重置颜色
 #    echo "请以管理员权限运行 =。=!"
 #    exit 1
 #fi
-## 获取管理员权限
-#sudo -i
+# 获取管理员权限
+sudo -i
 
 # 菜单
-echo "${CLR_GREEN}JIMMY BASH ==${CLR_}"
+echo -e "${CLR_GREEN}JIMMY BASH ==${CLR_}"
 echo "============================"
 echo "请选择需要的操作："
 echo "1. 容器相关"
