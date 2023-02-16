@@ -12,7 +12,7 @@ showMenu() {
   menu=("软件更新 + 基础环境配置" "关闭防火墙" "CHECK" "EXIT")
   select fav in "${menu[@]}"; do
     case $fav in
-    "更新环境与安装必备程序")
+    "更新环境、安装必备程序")
       echo "Americans eat roughly 100 acres of $fav each day!"
       ;;
     "关闭防火墙")
