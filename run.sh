@@ -2,7 +2,6 @@
 
 # 执行程序
 run() {
-  echo "路径::https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/script/$1.sh"
   curl -sSO https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/script/$1.sh && bash $1.sh && rm $1.sh -f
 }
 
