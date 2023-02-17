@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# 防止重复安装
+if command -v docker &>/dev/null; then
+  echo "Docker 已经安装在本机，无需重复安装。"
+  exit
+else
+  echo "开始安装 Docker。"
+fi
+
 # 识别包管理器
 if command -v dnf &>/dev/null; then
   PACKAGE_HEAD="dnf config-manager"
