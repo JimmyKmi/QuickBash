@@ -1,19 +1,5 @@
 #!/bin/bash
 
-# 检查 Portainer Agent 是否已经安装
-if docker ps -a --format "{{.Names}}" | grep -q "^portainer_agent$"; then
-  echo "Portainer Agent 已经安装在本机，请确认是否安装 Portainer ？ (y/n): "
-  read -n 1 -r
-  echo
-
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
-    echo "正在执行操作..."
-  else
-    echo "用户取消操作。"
-    exit
-  fi
-fi
-
 # 检查 Portainer 是否已经安装
 if docker ps -a --format "{{.Names}}" | grep -q "^portainer$"; then
   echo "Portainer 已经安装在本机，无需重复安装。"

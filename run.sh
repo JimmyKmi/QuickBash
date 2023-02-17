@@ -24,21 +24,13 @@ menuMain() {
       select fav in "${menu[@]}"; do
         case $fav in
         "安装 DOCKER-CE")
-          run env
-          run firewall-off
-          run docker-ce-install
+          run env firewall-off docker-ce-install
           ;;
         "安装 PORTAINER-CE")
-          run env
-          run firewall-off
-          run docker-ce-install
-          run portainer-ce-install
+          run env firewall-off docker-ce-install portainer-ce-install
           ;;
         "安装 PORTAINER-AGENT")
-          run env
-          run firewall-off
-          run docker-ce-install
-          run portainer-agent-install
+          run env firewall-off docker-ce-install portainer-agent-install
           ;;
         "返回")
           break
