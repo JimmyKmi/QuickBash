@@ -19,18 +19,26 @@ menuMain() {
       run firewall-off
       ;;
     "安装程序")
-      PS3='安装程序>'
+      PS3='>'
       menu=("安装 DOCKER-CE" "安装 PORTAINER-CE" "安装 PORTAINER-AGENT" "返回")
       select fav in "${menu[@]}"; do
         case $fav in
         "安装 DOCKER-CE")
-          run env firewall-off docker-ce-install
+          run env
+          run firewall-off
+          run docker-ce-install
           ;;
         "安装 PORTAINER-CE")
-          run env firewall-off docker-ce-install portainer-ce-install
+          run env
+          run firewall-off
+          run docker-ce-install
+          run portainer-ce-install
           ;;
         "安装 PORTAINER-AGENT")
-          run env firewall-off docker-ce-install portainer-agent-install
+          run env
+          run firewall-off
+          run docker-ce-install
+          run portainer-agent-install
           ;;
         "返回")
           break
