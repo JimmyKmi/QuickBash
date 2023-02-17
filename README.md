@@ -26,8 +26,8 @@
 | firewall-off | 3.2104 LTS | --        | --       | 8.5 UEFI | 20.04 UEFI |
 |              |
 | DEPLOY       |
-| docker       | 3.2104 LTS | --        | --       | 8.5 UEFI | X [未来将适配]  |
-| portainer    | 3.2104 LTS | --        | --       | 8.5 UEFI | X [未来将适配]  |
+| docker       | 3.2104 LTS | --        | --       | 8.5 UEFI | -          |
+| portainer    | 3.2104 LTS | --        | --       | 8.5 UEFI | -          |
 
 ## 如何使用
 
