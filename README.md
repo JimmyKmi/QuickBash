@@ -1,7 +1,5 @@
 # QuickBash 懒虫专用回车
 
-> 该项目仍在开发阶段，使用前请仔细阅读脚本
-
 ## 起源
 
 > 一切源于懒
@@ -15,6 +13,10 @@
 如果这个项目帮助到你麻烦点一下 Star，这会使我更有动力去完善它。
 遇到问题也可以提Issue，我会定期查看 Issue。更多信息我会在以后放在我的网站上 https://www.lzj.ac.cn/ ，目前网站还在完善。
 
+## 如何使用
+
+> curl -sSO https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/run.sh && bash run.sh && rm run.sh -f
+> 
 ## 兼容性列表
 
 > 为空则未测试，兼容则会写上测试系统版本，X->不兼容 \
@@ -28,7 +30,3 @@
 | DEPLOY       |
 | docker       | 3.2104 LTS | --        | --       | 8.5 UEFI | -          |
 | portainer    | 3.2104 LTS | --        | --       | 8.5 UEFI | -          |
-
-## 如何使用
-
-> curl -sSO https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/run.sh && bash run.sh && rm run.sh -f
