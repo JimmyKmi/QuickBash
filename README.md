@@ -27,9 +27,6 @@
 | DEPLOY       |
 | docker       | 3.2104 LTS x64 | --        | --       | --     | --     |
 | portainer    | 3.2104 LTS x64 | --        | --       | --     | --     |
-|              |
-| FAST-DEPLOY  |
-| firewall-off | 3.2104 LTS x64 | --        | --       | --     | --     |
 
 ## 如何使用
 
