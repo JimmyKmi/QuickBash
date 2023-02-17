@@ -8,11 +8,25 @@ else
   echo "开始安装 Portainer。"
 fi
 
+# 提示用户输入 AGENT_SECRET
+while true; do
+  echo "AGENT_SECRET 是 Portainer 与 Portainer Agent 相互认证的密钥，将会作为 portainer 环境变量启动。"
+  # shellcheck disable=SC2162
+  read -p "请输入 AGENT_SECRET ：" AGENT_SECRET
+  if [[ -n "${AGENT_SECRET}" && ! "${AGENT_SECRET}" =~ " " ]]; then
+    break
+  else
+    echo "输入内容至少包含一个字符串，且不能含空格"
+  fi
+done
+
+echo "正在创建容器"
+
 # 创建 Docker volume
 docker volume create portainer_data
 
-# 启动 Portainer Community Edition，9443 为对外端口
-docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+# 创建 Docker
+docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data -e AGENT_SECRET="${AGENT_SECRET}" portainer/portainer-ce:latest
 
 # 获取服务器的公网 IP 地址
 IPADDRESS=$(curl https://api.ipify.org)

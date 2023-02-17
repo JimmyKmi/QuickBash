@@ -55,7 +55,6 @@ systemctl enable docker
 cat <<EOF >/etc/docker/daemon.json
 {
   "registry-mirrors": [
-    "http://hub-mirror.c.163.com",
     "https://docker.mirrors.ustc.edu.cn",
     "https://registry.docker-cn.com",
     "https://dockerhub.azk8s.cn",
