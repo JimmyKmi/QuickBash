@@ -1,6 +1,6 @@
 # QuickBash 懒虫专用回车
 
-语言 / LANGUAGE：[中文](#quickbash-懒虫专用回车) | [English](#quickbash-lazy-mans-enter-key)
+语言 / LANGUAGE：[中文](#quickbash-懒虫专用回车) | [English](#quickbash-lazy-mans-enter)
 
 ## 起源
 
@@ -36,9 +36,9 @@
 
 ---
 
-# QuickBash Lazy Man's Enter Key
+# QuickBash Lazy Man's Enter
 
-语言 / LANGUAGE：[中文](#quickbash-懒虫专用回车) | [English](#quickbash-lazy-mans-enter-key)
+语言 / LANGUAGE：[中文](#quickbash-懒虫专用回车) | [English](#quickbash-lazy-mans-enter)
 
 ## Origin
 
