@@ -16,7 +16,7 @@
 ## 如何使用
 
 > curl -sSO https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/run.sh && bash run.sh && rm run.sh -f
-> 
+
 ## 兼容性列表
 
 > 为空则未测试，兼容则会写上测试系统版本，X->不兼容 \
