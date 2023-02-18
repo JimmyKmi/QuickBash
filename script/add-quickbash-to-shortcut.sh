@@ -25,18 +25,11 @@ if [ -z "$avg_google_rtt" ]; then
     exit
   else
     echo "内地延迟: $avg_baidu_rtt ms，使用 Gitee 源."
-    GIT_ADDR="https://gitee.com/jimmykmi/QuickBash/raw/master/script/"
+    sudo curl -sSO https://gitee.com/jimmykmi/QuickBash/raw/master/run.sh && bash run.sh && rm run.sh -f
+    echo "设置更新源为 gitee."
   fi
 else
   echo "海外延迟: $avg_google_rtt ms，使用 GitHub 源."
-  GIT_ADDR="https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/script/"
-fi
-
-# 判断 GIT_ADDR
-if [ "$GIT_ADDR" = "https://gitee.com/jimmykmi/QuickBash/raw/master/script/" ]; then
-  sudo curl -sSO https://gitee.com/jimmykmi/QuickBash/raw/master/run.sh && bash run.sh && rm run.sh -f
-  echo "设置更新源为 gitee."
-else
   sudo curl -sSO https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/run.sh && bash run.sh && rm run.sh -f
   echo "设置更新源为 github."
 fi
