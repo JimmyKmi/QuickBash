@@ -38,9 +38,11 @@ QuickBash 可以方便地一键安装这些软件，避免了繁琐的手动配�
 > 注意，不兼容指的是脚本不兼容，不代表程序不兼容 \
 > 如果你测试后发现支持，麻烦给我发Issue，我会继续完善这个表
 
-| Alibaba 3  | Alibaba 2 | Anolis 8 | CentOS   | Ubuntu     |
-|------------|-----------|----------|----------|------------|
-| 3.2104 LTS | --        | --       | 8.5 UEFI | 20.04 UEFI |
+| /               | Alibaba 3  | Alibaba 2 | Anolis 8 | CentOS   | Ubuntu     |
+|-----------------|------------|-----------|----------|----------|------------|
+| DOCKER          | 3.2104 LTS | --        | --       | 8.5 UEFI | 20.04 UEFI |
+| PORTAINER       | 3.2104 LTS | --        | --       | 8.5 UEFI | 20.04 UEFI |
+| NVIDIA-GPUS[试验] | --         | --        | --       | --       | 20.04 UEFI |
 
 ---
 
@@ -94,6 +96,8 @@ finally came up with a script that works.
 > If you find that the script works on a system that is not listed here, please submit an Issue, and I will continue to
 > improve this table.
 
-| Alibaba 3  | Alibaba 2 | Anolis 8 | CentOS   | Ubuntu     |
-|------------|-----------|----------|----------|------------|
-| 3.2104 LTS | --        | --       | 8.5 UEFI | 20.04 UEFI |
+| /                       | Alibaba 3  | Alibaba 2 | Anolis 8 | CentOS   | Ubuntu     |
+|-------------------------|------------|-----------|----------|----------|------------|
+| DOCKER                  | 3.2104 LTS | --        | --       | 8.5 UEFI | 20.04 UEFI |
+| PORTAINER               | 3.2104 LTS | --        | --       | 8.5 UEFI | 20.04 UEFI |
+| NVIDIA-GPUS[EXPERIMENT] | --         | --        | --       | --       | 20.04 UEFI |
