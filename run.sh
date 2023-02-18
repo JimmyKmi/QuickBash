@@ -13,7 +13,7 @@ run() {
     ping_baidu_result=$(ping -c 3 "www.baidu.com")                             # 发送3个ICMP报文
     avg_baidu_rtt=$(echo "$ping_baidu_result" | awk -F/ '/^rtt/ { print $5 }') # 解析输出，提取平均延迟
 
-    if [ -z "$avg_google_rtt" ]; then
+    if [ -z "$avg_baidu_rtt" ]; then
       echo "内地连接失败..."
       echo "请检查网络状况."
       return 1
