@@ -14,7 +14,7 @@ if [ -z "$avg_google_rtt" ]; then
   if [ -z "$avg_baidu_rtt" ]; then
     echo "内地连接失败..."
     echo "请检查网络状况."
-    return 1
+    exit
   else
     echo "内地延迟: $avg_baidu_rtt ms，使用 Gitee 源."
     GIT_ADDR="https://gitee.com/jimmykmi/QuickBash/raw/master/script/"
