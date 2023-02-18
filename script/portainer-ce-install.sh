@@ -32,7 +32,7 @@ echo "正在创建容器"
 docker volume create portainer_data
 
 # 创建 Docker
-docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data -e AGENT_SECRET="${AGENT_SECRET}" portainer/portainer-ce:latest
+docker run -d -p 9000:9000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data -e AGENT_SECRET="${AGENT_SECRET}" portainer/portainer-ce:latest
 
 # 获取服务器的公网 IP 地址
 IPADDRESS=$(curl https://api.ipify.org)
