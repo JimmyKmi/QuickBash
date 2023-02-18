@@ -7,12 +7,12 @@ echo "正在安装 NVIDIA FOR DOCKER 驱动"
 distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
 
 # 添加 nvidia-docker apt-key，信任官方源
-curl -s -L https://mirror.tuna.tsinghua.edu.cn/nvidia-docker/gpgkey | sudo tee /usr/share/keyrings/nvidia-docker.gpg > /dev/null
+curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo tee /usr/share/keyrings/nvidia-docker.gpg > /dev/null
 
 # 添加 nvidia-docker apt 源到 /etc/apt/sources.list.d/
 # 使用清华镜像加速下载
 echo "添加 nvidia-docker apt 源到 /etc/apt/sources.list.d/"
-curl -s -L "https://mirrors.tuna.tsinghua.edu.cn/nvidia-docker/$distribution/nvidia-docker.list" | \
+curl -s -L "https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list" | \
     sudo tee /etc/apt/sources.list.d/nvidia-docker.list
 
 # 更新 apt 源
