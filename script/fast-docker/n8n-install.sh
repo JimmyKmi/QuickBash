@@ -1,6 +1,11 @@
 #!/bin/bash
 # 快速安装 n8n
 
+# 停止并删除旧的 myn8n 容器
+docker stop myn8n
+docker rm myn8n
+docker volume rm n8n_data
+
 echo "请为 n8n 设置用户名与密码。"
 
 # 提示用户输入用户名和密码
@@ -39,4 +44,4 @@ docker run -d \
 echo "n8n 安装成功！"
 echo "用户名: $USERNAME"
 echo "密码: $PASSWORD"
-echo "请通过 http://<your_server_ip>:5678 访问 n8n。"
+echo "请通过 http://<your_server_ip>:25678 访问 n8n。"
