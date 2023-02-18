@@ -93,12 +93,12 @@ menuMain() {
     "安装驱动")
       PS3='[]>'
       menu=(
-        "NVIDIA GPU FOR UBUNTU(试验性)"
+        "NVIDIA GPU FOR DOCKER 试验性"
         "返回"
       )
       select fav in "${menu[@]}"; do
         case $fav in
-        "NVIDIA GPU FOR DOCKER(试验性)")
+        "NVIDIA GPU FOR DOCKER 试验性")
           run gpu-nvidia-for-docker
           ;;
         "返回")
