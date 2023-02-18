@@ -35,10 +35,10 @@ fi
 # 判断 GIT_ADDR
 if [ "$GIT_ADDR" = "https://gitee.com/jimmykmi/QuickBash/raw/master/script/" ]; then
   sudo curl -sSO https://gitee.com/jimmykmi/QuickBash/raw/master/run.sh && bash run.sh && rm run.sh -f
-  echo "设置默认源为 gitee."
+  echo "设置更新源为 gitee."
 else
   sudo curl -sSO https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/run.sh && bash run.sh && rm run.sh -f
-  echo "设置默认源为 github."
+  echo "设置更新源为 github."
 fi
 
 echo "快捷方式已添加，需要启动 quickbash 时只需要输入 quickbash 即可"
