@@ -48,11 +48,15 @@ menuMain() {
   PS3='[]>' # 设置菜单提示符
   menu=(
     "安装 NODE-RED"
+    "安装 N8N"
     "返回")
   select fav in "${menu[@]}"; do # 显示菜单并等待用户输入
     case $fav in
-    "NODE-RED")
+    "安装 NODE-RED")
       run nodered-install
+      ;;
+    "安装 N8N")
+      run n8n-install
       ;;
     "返回")
       exit
