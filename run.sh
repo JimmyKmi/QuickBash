@@ -1,31 +1,31 @@
 #!/bin/bash
 
+# 检测网络
+echo "正在检测网络..."
+ping_google_result=$(ping -c 3 "www.google.com")                             # 发送3个ICMP报文
+avg_google_rtt=$(echo "$ping_google_result" | awk -F/ '/^rtt/ { print $5 }') # 解析输出，提取平均延迟
+
+if [ -z "$avg_google_rtt" ]; then
+  echo "海外连接失败..."
+  # 检测内地网络
+  ping_baidu_result=$(ping -c 3 "www.baidu.com")                             # 发送3个ICMP报文
+  avg_baidu_rtt=$(echo "$ping_baidu_result" | awk -F/ '/^rtt/ { print $5 }') # 解析输出，提取平均延迟
+
+  if [ -z "$avg_baidu_rtt" ]; then
+    echo "内地连接失败..."
+    echo "请检查网络状况."
+    return 1
+  else
+    echo "内地延迟: $avg_baidu_rtt ms，使用 Gitee 源."
+    GIT_ADDR="https://gitee.com/jimmykmi/QuickBash/raw/master/script/"
+  fi
+else
+  echo "海外延迟: $avg_google_rtt ms，使用 GitHub 源."
+  GIT_ADDR="https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/script/"
+fi
+
 # 执行程序
 run() {
-  # 检测网络
-  echo "正在检测网络..."
-  ping_google_result=$(ping -c 3 "www.google.com")                             # 发送3个ICMP报文
-  avg_google_rtt=$(echo "$ping_google_result" | awk -F/ '/^rtt/ { print $5 }') # 解析输出，提取平均延迟
-
-  if [ -z "$avg_google_rtt" ]; then
-    echo "海外连接失败..."
-    # 检测内地网络
-    ping_baidu_result=$(ping -c 3 "www.baidu.com")                             # 发送3个ICMP报文
-    avg_baidu_rtt=$(echo "$ping_baidu_result" | awk -F/ '/^rtt/ { print $5 }') # 解析输出，提取平均延迟
-
-    if [ -z "$avg_baidu_rtt" ]; then
-      echo "内地连接失败..."
-      echo "请检查网络状况."
-      return 1
-    else
-      echo "内地延迟: $avg_baidu_rtt ms，使用 Gitee 源."
-      GIT_ADDR="https://gitee.com/jimmykmi/QuickBash/raw/master/script/"
-    fi
-  else
-    echo "海外延迟: $avg_google_rtt ms，使用 GitHub 源."
-    GIT_ADDR="https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/script/"
-  fi
-
   # 从指定URL下载脚本，执行脚本，并删除脚本文件
   sudo curl -sSO $GIT_ADDR$1.sh && bash $1.sh && rm $1.sh -f
 }
