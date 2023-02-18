@@ -44,7 +44,7 @@ fi
 
 # 安装 Docker
 echo "正在安装 Docker..."
-${PACKAGE_HEAD_SHORT} -y install docker-ce --nobest "${PACKAGE_TAG}"
+${PACKAGE_HEAD_SHORT} -y install docker-ce "${PACKAGE_TAG}"
 
 # 启动 Docker
 echo "正在启动 Docker..."
