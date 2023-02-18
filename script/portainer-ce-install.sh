@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# 检查 Docker 是否已经安装
+if ! command -v docker >/dev/null 2>&1 ; then
+    echo "Docker 未安装."
+fi
+
+
 # 检查 Portainer 是否已经安装
 if docker ps -a --format "{{.Names}}" | grep -q "^portainer$"; then
   echo "Portainer 已经安装在本机，无需重复安装。"
