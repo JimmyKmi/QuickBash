@@ -8,7 +8,7 @@ run() {
 
 # 主菜单
 menuMain() {
-  PS3='>' # 设置菜单提示符
+  PS3='[]>' # 设置菜单提示符
   menu=("更新环境、安装必备程序" "关闭防火墙" "安装程序" "退出") # 定义菜单项
   select fav in "${menu[@]}"; do # 显示菜单并等待用户输入
     case $fav in
@@ -19,7 +19,7 @@ menuMain() {
       run firewall-off
       ;;
     "安装程序")
-      PS3='>'
+      PS3='[]>'
       menu=(
         "安装 DOCKER-CE[INSTALL]"
         "安装 PORTAINER-CE[INSTALL]"
@@ -31,12 +31,12 @@ menuMain() {
       select fav in "${menu[@]}"; do
         case $fav in
         "安装 DOCKER-CE[INSTALL]")
-          run env
+          run environment
           run firewall-off
           run docker-ce-install
           ;;
         "安装 PORTAINER-CE[INSTALL]")
-          run env
+          run environment
           run firewall-off
           run docker-ce-install
           run portainer-ce-install
@@ -49,7 +49,7 @@ menuMain() {
           run portainer-ce-install
           ;;
         "安装 PORTAINER-AGENT[INSTALL]")
-          run env
+          run environment
           run firewall-off
           run docker-ce-install
           run portainer-agent-install
