@@ -28,30 +28,33 @@ fi
 
 # 添加 docker-ce 的包管理器源
 echo "正在添加 docker-ce 的包管理器源..."
-${PACKAGE_HEAD} --add-repo=https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+if [ -z "$PACKAGE_TAG" ]; then
+  # apt 包管理器
+  # 添加 Docker 官方 GPG 密钥
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+  # 添加 Docker 镜像源
+  echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 
-# 如果是 Alibaba Cloud Linux 3，安装 dnf-releasever-adapter 插件
-if [ -f /etc/alinux-release ]; then
-  if grep -q 'Alibaba Cloud Linux release 3' /etc/alinux-release; then
-    echo "检测到 Alibaba Cloud Linux，正在安装 dnf-releasever-adapter 插件..."
-    if command -v dnf &>/dev/null; then
-      dnf -y install dnf-plugin-releasever-adapter --repo alinux3-plus
-    elif command -v yum &>/dev/null; then
-      yum -y install dnf-plugin-releasever-adapter --enablerepo=alinux3-plus
+else
+  # yum / dnf 包管理器
+  ${PACKAGE_HEAD} --add-repo=https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+
+  # 如果是 Alibaba Cloud Linux 3，安装 dnf-releasever-adapter 插件
+  if [ -f /etc/alinux-release ]; then
+    if grep -q 'Alibaba Cloud Linux release 3' /etc/alinux-release; then
+      echo "检测到 Alibaba Cloud Linux，正在安装 dnf-releasever-adapter 插件..."
+      if command -v dnf &>/dev/null; then
+        dnf -y install dnf-plugin-releasever-adapter --repo alinux3-plus
+      elif command -v yum &>/dev/null; then
+        yum -y install dnf-plugin-releasever-adapter --enablerepo=alinux3-plus
+      fi
     fi
   fi
 fi
 
 # 安装 Docker
 echo "正在安装 Docker..."
-if [ -z "$PACKAGE_TAG" ]; then
-  #  apt 包管理器
-  curl -fsSL https://get.docker.com -o get-docker.sh
-  sudo sh get-docker.sh
-else
-  #  yum / dnf 包管理器
-  ${PACKAGE_HEAD_SHORT} -y install docker-ce "${PACKAGE_TAG}"
-fi
+${PACKAGE_HEAD_SHORT} -y install docker-ce "${PACKAGE_TAG}"
 
 # 启动 Docker
 echo "正在启动 Docker..."
@@ -76,7 +79,8 @@ EOF
 
 # 重启 Docker
 echo "正在重启 Docker..."
-systemctl restart docker
+sudo systemctl daemon-reload
+sudo systemctl restart docker
 
 # 检查 Docker 是否安装成功
 echo "正在检查 Docker 是否安装成功..."
