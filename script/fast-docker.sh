@@ -24,11 +24,11 @@ if [ -z "$avg_google_rtt" ]; then
     exit
   else
     echo "内地延迟: $avg_baidu_rtt ms，使用 Gitee 源."
-    GIT_ADDR="https://gitee.com/jimmykmi/QuickBash/raw/master/script/"
+    GIT_ADDR="https://gitee.com/jimmykmi/QuickBash/raw/master/script/fast-docker/"
   fi
 else
   echo "海外延迟: $avg_google_rtt ms，使用 GitHub 源."
-  GIT_ADDR="https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/script/"
+  GIT_ADDR="https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/script/fast-docker/"
 fi
 
 # 过滤掉没装 Docker 的小可爱
@@ -52,7 +52,7 @@ menuMain() {
   select fav in "${menu[@]}"; do # 显示菜单并等待用户输入
     case $fav in
     "NODE-RED")
-      run fast-docker/nodered-install
+      run nodered-install
       ;;
     "返回")
       exit

@@ -92,7 +92,7 @@ menuMain() {
           run portainer-agent-install
           ;;
         "快速添加服务 FAST-DOCKER")
-          run fast-docker/run
+          run fast-docker
           ;;
         "返回")
           break
