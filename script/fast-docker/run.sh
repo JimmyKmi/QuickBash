@@ -9,7 +9,7 @@ fi
 
 # 检测网络
 echo "正在检测网络..."
-ping_google_result=$(ping -c 3 "www.google.com")                             # 发送3个ICMP报文
+ping_google_result=$(ping -c 2 "www.google.com")                             # 发送3个ICMP报文
 avg_google_rtt=$(echo "$ping_google_result" | awk -F/ '/^rtt/ { print $5 }') # 解析输出，提取平均延迟
 
 if [ -z "$avg_google_rtt" ]; then
@@ -31,6 +31,12 @@ else
   GIT_ADDR="https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/script/"
 fi
 
+# 过滤掉没装 Docker 的小可爱
+if ! command -v docker >/dev/null 2>&1 ; then
+    echo "Docker 未安装."
+    exit
+fi
+
 # 执行程序
 run() {
   # 从指定URL下载脚本，执行脚本，并删除脚本文件
@@ -41,85 +47,14 @@ run() {
 menuMain() {
   PS3='[]>' # 设置菜单提示符
   menu=(
-    "更新环境、安装必备程序"
-    "关闭防火墙"
-    "DOCKER"
-    "安装驱动"
-    "退出")
+    "安装 NODE-RED"
+    "返回")
   select fav in "${menu[@]}"; do # 显示菜单并等待用户输入
     case $fav in
-    "更新环境、安装必备程序")
-      run env
+    "NODE-RED")
+      run fast-docker/nodered-install
       ;;
-    "关闭防火墙")
-      run firewall-off
-      ;;
-    "DOCKER")
-      PS3='[]>'
-      menu=(
-        "安装 DOCKER-CE[INSTALL]"
-        "安装 PORTAINER-CE[INSTALL]"
-        "卸载 PORTAINER-CE[REMOVE]"
-        "更新 PORTAINER-CE[UPDATE]"
-        "安装 PORTAINER-AGENT[INSTALL]"
-        "快速添加服务 FAST-DOCKER"
-        "返回"
-      )
-      select fav in "${menu[@]}"; do
-        case $fav in
-        "安装 DOCKER-CE[INSTALL]")
-          run environment
-          run firewall-off
-          run docker-ce-install
-          ;;
-        "安装 PORTAINER-CE[INSTALL]")
-          run environment
-          run firewall-off
-          run docker-ce-install
-          run portainer-ce-install
-          ;;
-        "卸载 PORTAINER-CE[REMOVE]")
-          run portainer-ce-uninstall
-          ;;
-        "更新 PORTAINER-CE[UPDATE]")
-          run portainer-ce-uninstall
-          run portainer-ce-install
-          ;;
-        "安装 PORTAINER-AGENT[INSTALL]")
-          run environment
-          run firewall-off
-          run docker-ce-install
-          run portainer-agent-install
-          ;;
-        "快速添加服务 FAST-DOCKER")
-          run fast-docker/run
-          ;;
-        "返回")
-          break
-          ;;
-        *) echo "VALUE [$REPLY] UNAVAILABLE" ;; # 处理非法输入
-        esac
-      done
-      ;;
-    "安装驱动")
-      PS3='[]>'
-      menu=(
-        "NVIDIA GPU FOR DOCKER 试验性"
-        "返回"
-      )
-      select fav in "${menu[@]}"; do
-        case $fav in
-        "NVIDIA GPU FOR DOCKER 试验性")
-          run gpu-nvidia-for-docker
-          ;;
-        "返回")
-          break
-          ;;
-        *) echo "VALUE [$REPLY] UNAVAILABLE" ;; # 处理非法输入
-        esac
-      done
-      ;;
-    "退出")
+    "返回")
       exit
       ;;
     *) echo "VALUE [$REPLY] UNAVAILABLE" ;; # 处理非法输入

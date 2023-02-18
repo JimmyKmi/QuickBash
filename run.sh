@@ -9,7 +9,7 @@ fi
 
 # 检测网络
 echo "正在检测网络..."
-ping_google_result=$(ping -c 3 "www.google.com")                             # 发送3个ICMP报文
+ping_google_result=$(ping -c 2 "www.google.com")                             # 发送3个ICMP报文
 avg_google_rtt=$(echo "$ping_google_result" | awk -F/ '/^rtt/ { print $5 }') # 解析输出，提取平均延迟
 
 if [ -z "$avg_google_rtt" ]; then
