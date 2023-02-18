@@ -16,6 +16,4 @@ docker run -d \
 
 # 输出安装成功信息
 echo "n8n 安装成功！"
-echo "用户名: $USERNAME"
-echo "密码: $PASSWORD"
 echo "请通过 http://<your_server_ip>:25678 访问 n8n。"
