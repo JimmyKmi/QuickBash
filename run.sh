@@ -27,7 +27,7 @@ run() {
   fi
 
   # 从指定URL下载脚本，执行脚本，并删除脚本文件
-  curl -sSO $GIT_ADDR$1.sh && bash $1.sh && rm $1.sh -f
+  sudo curl -sSO $GIT_ADDR$1.sh && bash $1.sh && rm $1.sh -f
 }
 
 # 主菜单

@@ -26,10 +26,10 @@ QuickBash 可以方便地一键安装这些软件，避免了繁琐的手动配�
 ## 如何使用
 
 > 如果服务器在内地 \
-> sudo -i && curl -sSO https://gitee.com/jimmykmi/QuickBash/raw/master/run.sh && bash run.sh && rm run.sh -f 
+> sudo curl -sSO https://gitee.com/jimmykmi/QuickBash/raw/master/run.sh && bash run.sh && rm run.sh -f 
 > 
 > 如果服务器在海外 \
-> sudo -i && curl -sSO https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/run.sh && bash run.sh && rm run.sh -f 
+> sudo curl -sSO https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/run.sh && bash run.sh && rm run.sh -f 
 > 
 
 ## 兼容性列表
