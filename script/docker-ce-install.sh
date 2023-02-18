@@ -44,7 +44,14 @@ fi
 
 # 安装 Docker
 echo "正在安装 Docker..."
-${PACKAGE_HEAD_SHORT} -y install docker-ce "${PACKAGE_TAG}"
+if [ -z "$PACKAGE_TAG" ]; then
+  #  apt 包管理器
+  curl -fsSL https://get.docker.com -o get-docker.sh
+  sudo sh get-docker.sh
+else
+  #  yum / dnf 包管理器
+  ${PACKAGE_HEAD_SHORT} -y install docker-ce "${PACKAGE_TAG}"
+fi
 
 # 启动 Docker
 echo "正在启动 Docker..."
