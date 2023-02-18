@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# 检查是否以管理员权限运行
+# shellcheck disable=SC2046
+if [ $(id -u) -ne 0 ]; then
+  echo "请以管理员权限运行此脚本。"
+  exit 1
+fi
+
 # 检测网络
 echo "正在检测网络..."
 ping_google_result=$(ping -c 3 "www.google.com")                             # 发送3个ICMP报文
