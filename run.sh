@@ -45,6 +45,7 @@ menuMain() {
     "关闭防火墙"
     "DOCKER"
     "安装驱动"
+    "将 QuickBash 添加到快捷指令"
     "退出")
   select fav in "${menu[@]}"; do # 显示菜单并等待用户输入
     case $fav in
@@ -63,7 +64,6 @@ menuMain() {
         "更新 PORTAINER-CE[UPDATE]"
         "安装 PORTAINER-AGENT[INSTALL]"
         "快速添加服务 FAST-DOCKER"
-        "将 QuickBash 添加到快捷指令"
         "返回"
       )
       select fav in "${menu[@]}"; do
