@@ -12,12 +12,15 @@ fi
 if command -v dnf &>/dev/null; then
   PACKAGE_HEAD="dnf config-manager"
   PACKAGE_HEAD_SHORT="dnf"
+  PACKAGE_TAG="--nobest"
 elif command -v yum &>/dev/null; then
   PACKAGE_HEAD="yum-config-manager"
   PACKAGE_HEAD_SHORT="yum"
+  PACKAGE_TAG="--nobest"
 elif command -v apt-get &>/dev/null; then
   PACKAGE_HEAD="add-apt-repository"
   PACKAGE_HEAD_SHORT="apt-get"
+  PACKAGE_TAG=""
 else
   echo "系统不在兼容列表"
   exit 1
@@ -41,7 +44,7 @@ fi
 
 # 安装 Docker
 echo "正在安装 Docker..."
-${PACKAGE_HEAD_SHORT} -y install docker-ce --nobest
+${PACKAGE_HEAD_SHORT} -y install docker-ce --nobest "${PACKAGE_TAG}"
 
 # 启动 Docker
 echo "正在启动 Docker..."
