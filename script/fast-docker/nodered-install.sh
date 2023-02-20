@@ -68,26 +68,17 @@ done
 # shellcheck disable=SC2016
 PASSWORD='$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN.'
 
-# 把配置文件拷出来
-docker cp mynodered:/data/settings.js ./temp_settings.js
-
 # 进入 Node-RED 容器，并修改 settings.js 配置文件
 # shellcheck disable=SC1004
 # shellcheck disable=SC2016
 sed -i 's/\/\/adminAuth: {/adminAuth: {\
-    type: "credentials",\
-    users: [{\
-        username: "'"$USERNAME"'",\
-        password: "$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN",\
-        permissions: "*"\
-    }]\
-}/g' ./temp_settings.js
-
-# 把配置文件拷回去
-docker cp mynodered:/data/settings.js ./temp_settings.js
-
-# 删除缓存
-rm ./temp_settings.js -f
+        type: "credentials",\
+        users: [{\
+            username: "'"$USERNAME"'",\
+            password: "$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN",\
+            permissions: "*"\
+        }]\
+    }/g' /var/lib/docker/volumes/node_red_data/_data/settings.js
 
 # 设置 Node-RED 的用户名和密码
 #docker exec mynodered node -e "let settings = require('/data/settings.js'); settings.credentialSecret = '$(openssl rand -base64 18)'; fs.writeFileSync('/data/settings.js', JSON.stringify(settings, null, 2));"
