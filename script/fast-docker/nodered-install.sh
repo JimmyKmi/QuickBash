@@ -1,20 +1,6 @@
 #!/bin/bash
 # 快速安装 NODE-RED
 
-echo "注意: nodered 脚本还处于试验阶段，可能存在未知的问题。"
-echo "请在确认知晓后继续进行安装。"
-while true; do
-  read -t 10 -p "您是否确认继续安装？ [Y/n] " yn
-  if [[ "$yn" == "y" || "$yn" == "Y" || "$yn" == "" ]]; then
-    break
-  elif [[ "$yn" == "n" || "$yn" == "N" ]]; then
-    echo "您已取消安装。"
-    exit 0
-  else
-    echo "无效的输入，请重新输入。"
-  fi
-done
-
 # 停止并删除旧的 mynodered 容器
 docker stop mynodered
 docker rm mynodered
@@ -66,7 +52,49 @@ while true; do
 done
 
 # shellcheck disable=SC2016
-PASSWORD='$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN.'
+#PASSWORD='$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN.'
+# 检查 Node.js 是否已安装
+if ! command -v node >/dev/null; then
+  echo "Node.js is not installed. Installing it now..."
+
+  # 检查系统上使用的包管理器
+  if command -v apt-get >/dev/null; then
+    # Debian/Ubuntu
+    sudo apt-get install nodejs -y
+  elif command -v yum >/dev/null; then
+    # CentOS/Fedora
+    sudo yum install nodejs -y
+  else
+    # 其他发行版
+    echo "系统不在支持列表."
+    exit 1
+  fi
+fi
+
+# 检查 NPM 是否已安装
+if ! command -v npm >/dev/null; then
+  echo "NPM is not installed. Installing it now..."
+  # 检查系统上使用的包管理器
+  if command -v apt-get >/dev/null; then
+    # Debian/Ubuntu
+    sudo apt-get install npm -y
+  elif command -v yum >/dev/null; then
+    # CentOS/Fedora
+    sudo yum install npm -y
+  else
+    # 其他发行版
+    echo "系统不在支持列表."
+    exit 1
+  fi
+fi
+
+# 显示 Node.js 和 NPM 的版本信息
+node -v
+npm -v
+
+npm install bcryptjs
+PASSWORD=$(node -e "console.log(require('bcryptjs').hashSync('password', 8));")
+echo $PASSWORD
 
 # 进入 Node-RED 容器，并修改 settings.js 配置文件
 # shellcheck disable=SC1004
@@ -75,13 +103,10 @@ sed -i 's/\/\/adminAuth: {/adminAuth: {\
         type: "credentials",\
         users: [{\
             username: "'"$USERNAME"'",\
-            password: "$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN",\
+            password: "'"$PASSWORD"'",\
             permissions: "*"\
         }]\
-    }/g' /var/lib/docker/volumes/node_red_data/_data/settings.js
-
-# 设置 Node-RED 的用户名和密码
-#docker exec mynodered node -e "let settings = require('/data/settings.js'); settings.credentialSecret = '$(openssl rand -base64 18)'; fs.writeFileSync('/data/settings.js', JSON.stringify(settings, null, 2));"
+    },/g' /var/lib/docker/volumes/node_red_data/_data/settings.js
 
 # 重启 Node-RED 容器，使修改后的配置生效
 docker restart mynodered
