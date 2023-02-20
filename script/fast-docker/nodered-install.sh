@@ -42,15 +42,19 @@ docker run -d -p 21800:1880 \
   -v node_red_data:/data \
   nodered/node-red
 
-# 检查插件是否已安装
-if ! docker exec mynodered npm list -g | grep -q node-red-contrib-credentials; then
-  echo "正在安装 node-red-contrib-credentials 插件..."
-  docker exec mynodered npm install -g node-red-contrib-credentials --location=global
-  sudo npm install -g node-red-contrib-credentials
-fi
+# 安装 node-red-contrib-credentials 插件
+docker exec -u 0 mynodered npm install -g node-red-contrib-credentials --location=global
 
-# 设置用户名和密码
+# 进入 Node-RED 容器，并修改 settings.js 配置文件
+docker exec -it mynodered /bin/bash -c "sed -i 's/\/\/adminAuth/adminAuth/g' /data/settings.js"
+
+# 重启 Node-RED 容器，使修改后的配置生效
+docker restart mynodered
+
+# 提示用户设置用户名和密码
 echo "请为 Node-RED 设置用户名与密码。"
+
+# 提示用户输入用户名和密码
 while true; do
   read -p "请输入要创建的用户名: " USERNAME
   read -p "请输入要创建的密码: " -s PASSWORD
@@ -64,27 +68,11 @@ while true; do
   fi
 done
 
-# 生成存储凭证的密钥
-KEY=$(docker exec mynodered node -e "console.log(require('crypto').randomBytes(16).toString('hex'));")
+# 设置 Node-RED 的用户名和密码
+docker exec mynodered node -e "let settings = require('/data/settings.js'); settings.adminAuth = {type: 'credentials', users: [{username: '$USERNAME', password: '$PASSWORD', permissions: '*'}]}; fs.writeFileSync('/data/settings.js', JSON.stringify(settings, null, 2));"
 
-# 在容器中创建凭证文件
-docker exec mynodered touch /data/credentials.json
-
-# 在凭证文件中添加管理员凭证
-docker exec mynodered node -e "console.log(JSON.stringify({admin:{username:'$USERNAME',password:'$PASSWORD'}},null,2));" > credentials.json.tmp
-docker exec mynodered node -e "console.log(require('crypto').createCipher('aes192', '$KEY').update(require('fs').readFileSync('/data/credentials.json')).toString('hex'));" | xargs -i{} echo "{}" > credentials.json.tmp.encrypted
-docker exec mynodered cat credentials.json.tmp.encrypted >> /data/credentials.json
-docker exec mynodered rm credentials.json.tmp credentials.json.tmp.encrypted
-
-# 修改 Node-RED 配置文件，启用凭证文件
-docker exec mynodered sed -i -e '/credentialSecret/c\\"credentialSecret": "'"$KEY"'"\' /data/settings.js
-docker exec mynodered sed -i -e '/adminAuth/c\\"adminAuth": {\n    "type": "credentials",\n    "users": [\n        {\n            "username": "'"$USERNAME"'",\n            "password": "'"$PASSWORD"'",\n            "permissions": "*"\n        }\n    ]\n}' /data/settings.js
-
-# 重启容器
-docker restart mynodered
-
-# 输出安装成功信息
-echo "Node-RED 安装成功！"
+# 输出设置成功信息
+echo "Node-RED 用户名与密码设置成功！"
 echo "用户名: $USERNAME"
 echo "密码: $PASSWORD"
 echo "请通过 http://<your_server_ip>:21800 访问 Node-RED。"
