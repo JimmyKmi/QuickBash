@@ -45,7 +45,8 @@ docker run -d -p 21800:1880 \
 # 检查插件是否已安装
 if ! docker exec mynodered npm list -g | grep -q node-red-contrib-credentials; then
   echo "正在安装 node-red-contrib-credentials 插件..."
-  docker exec mynodered npm install -g node-red-contrib-credentials
+  docker exec mynodered npm install -g node-red-contrib-credentials --location=global
+  sudo npm install -g node-red-contrib-credentials
 fi
 
 # 设置用户名和密码
