@@ -90,7 +90,7 @@ docker cp mynodered:/data/settings.js ./temp_settings.js
 rm ./temp_settings.js -f
 
 # 设置 Node-RED 的用户名和密码
-docker exec mynodered node -e "let settings = require('/data/settings.js'); settings.credentialSecret = '$(openssl rand -base64 18)'; fs.writeFileSync('/data/settings.js', JSON.stringify(settings, null, 2));"
+#docker exec mynodered node -e "let settings = require('/data/settings.js'); settings.credentialSecret = '$(openssl rand -base64 18)'; fs.writeFileSync('/data/settings.js', JSON.stringify(settings, null, 2));"
 
 # 重启 Node-RED 容器，使修改后的配置生效
 docker restart mynodered
