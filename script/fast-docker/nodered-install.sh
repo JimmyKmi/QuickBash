@@ -36,10 +36,20 @@ if docker volume ls | grep "$VOLUME_NAME"; then
   fi
 fi
 
-# 请为 Node-RED 设置用户名与密码。
-echo "请为 Node-RED 设置用户名与密码。"
+# 安装 Node-RED
+docker run -d -p 21800:1880 \
+  --name mynodered \
+  -v node_red_data:/data \
+  nodered/node-red
 
-# 提示用户输入用户名和密码
+# 检查插件是否已安装
+if ! docker exec mynodered npm list -g | grep -q node-red-contrib-credentials; then
+  echo "正在安装 node-red-contrib-credentials 插件..."
+  docker exec mynodered npm install -g node-red-contrib-credentials
+fi
+
+# 设置用户名和密码
+echo "请为 Node-RED 设置用户名与密码。"
 while true; do
   read -p "请输入要创建的用户名: " USERNAME
   read -p "请输入要创建的密码: " -s PASSWORD
@@ -53,17 +63,27 @@ while true; do
   fi
 done
 
-# 安装 Node-RED
-docker run -d -p 21800:1880 \
-  --name mynodered \
-  -v node_red_data:/data \
-  -e NODE_RED_ENABLE_PROJECTS=true \
-  -e NODE_RED_USERNAME="$USERNAME" \
-  -e NODE_RED_PASSWORD="$PASSWORD" \
-  nodered/node-red
+# 生成存储凭证的密钥
+KEY=$(docker exec mynodered node -e "console.log(require('crypto').randomBytes(16).toString('hex'));")
+
+# 在容器中创建凭证文件
+docker exec mynodered touch /data/credentials.json
+
+# 在凭证文件中添加管理员凭证
+docker exec mynodered node -e "console.log(JSON.stringify({admin:{username:'$USERNAME',password:'$PASSWORD'}},null,2));" > credentials.json.tmp
+docker exec mynodered node -e "console.log(require('crypto').createCipher('aes192', '$KEY').update(require('fs').readFileSync('/data/credentials.json')).toString('hex'));" | xargs -i{} echo "{}" > credentials.json.tmp.encrypted
+docker exec mynodered cat credentials.json.tmp.encrypted >> /data/credentials.json
+docker exec mynodered rm credentials.json.tmp credentials.json.tmp.encrypted
+
+# 修改 Node-RED 配置文件，启用凭证文件
+docker exec mynodered sed -i -e '/credentialSecret/c\\"credentialSecret": "'"$KEY"'"\' /data/settings.js
+docker exec mynodered sed -i -e '/adminAuth/c\\"adminAuth": {\n    "type": "credentials",\n    "users": [\n        {\n            "username": "'"$USERNAME"'",\n            "password": "'"$PASSWORD"'",\n            "permissions": "*"\n        }\n    ]\n}' /data/settings.js
+
+# 重启容器
+docker restart mynodered
 
 # 输出安装成功信息
 echo "Node-RED 安装成功！"
-echo "请通过 http://<your_server_ip>:21800 访问 Node-RED。"
 echo "用户名: $USERNAME"
 echo "密码: $PASSWORD"
+echo "请通过 http://<your_server_ip>:21800 访问 Node-RED。"
