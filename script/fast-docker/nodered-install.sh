@@ -48,9 +48,6 @@ docker exec -u 0 mynodered npm install -g node-red-contrib-credentials --locatio
 # 进入 Node-RED 容器，并修改 settings.js 配置文件
 docker exec -it mynodered /bin/bash -c "sed -i 's/\/\/adminAuth/adminAuth/g' /data/settings.js"
 
-# 重启 Node-RED 容器，使修改后的配置生效
-docker restart mynodered
-
 # 提示用户设置用户名和密码
 echo "请为 Node-RED 设置用户名与密码。"
 
@@ -69,7 +66,10 @@ while true; do
 done
 
 # 设置 Node-RED 的用户名和密码
-docker exec mynodered node -e "let settings = require('/data/settings.js'); settings.adminAuth = {type: 'credentials', users: [{username: '$USERNAME', password: '$PASSWORD', permissions: '*'}]}; fs.writeFileSync('/data/settings.js', JSON.stringify(settings, null, 2));"
+docker exec mynodered node -e "let settings = require('/data/settings.js'); settings.adminAuth = {type: 'credentials', users: [{username: '$USERNAME', password: '$PASSWORD', permissions: '*'}]}; settings.credentialSecret = '$(openssl rand -base64 18)'; fs.writeFileSync('/data/settings.js', JSON.stringify(settings, null, 2));"
+
+# 重启 Node-RED 容器，使修改后的配置生效
+docker restart mynodered
 
 # 输出设置成功信息
 echo "Node-RED 用户名与密码设置成功！"
