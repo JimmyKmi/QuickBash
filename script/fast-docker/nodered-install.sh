@@ -45,25 +45,11 @@ docker run -d -p 21800:1880 \
 # 安装 node-red-contrib-credentials 插件
 docker exec -u 0 mynodered npm install -g node-red-contrib-credentials --location=global
 
-# 进入 Node-RED 容器，并修改 settings.js 配置文件
-# shellcheck disable=SC1004
-# shellcheck disable=SC2016
-#sed -i 's/\/\/adminAuth: {/adminAuth: {\
-#    type: "credentials",\
-#    users: [{\
-#        username: "admin",\
-#        password: "$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN.",\
-#        permissions: "*"\
-#    }]\
-#}/g' ./settings.js
-
 # 重启 Node-RED 容器，使修改后的配置生效
 docker restart mynodered
 
-# 提示用户设置用户名和密码
-echo "请为 Node-RED 设置用户名与密码。"
-
 # 提示用户输入用户名和密码
+# shellcheck disable=SC2162
 while true; do
   read -p "请输入要创建的用户名: " USERNAME
   read -p "请输入要创建的密码: " -s PASSWORD
@@ -76,6 +62,23 @@ while true; do
     echo "两次输入的密码不一致，请重新输入。"
   fi
 done
+
+# shellcheck disable=SC2016
+PASSWORD='$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN.'
+
+# 进入 Node-RED 容器，并修改 settings.js 配置文件
+# shellcheck disable=SC1004
+# shellcheck disable=SC2016
+sed -i 's/\/\/adminAuth: {/adminAuth: {\
+    type: "credentials",\
+    users: [{\
+        username: "",\
+        password: "",\
+        permissions: "*"\
+    }]\
+}/g' ./settings.js
+# 提示用户设置用户名和密码
+echo "请为 Node-RED 设置用户名与密码。"
 
 # 设置 Node-RED 的用户名和密码
 docker exec mynodered node -e "let settings = require('/data/settings.js'); settings.adminAuth = {type: 'credentials', users: [{username: '$USERNAME', password: '$PASSWORD', permissions: '*'}]}; settings.credentialSecret = '$(openssl rand -base64 18)'; fs.writeFileSync('/data/settings.js', JSON.stringify(settings, null, 2));"
