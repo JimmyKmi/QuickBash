@@ -52,7 +52,6 @@ while true; do
 done
 
 # shellcheck disable=SC2016
-#PASSWORD='$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN.'
 # 检查 Node.js 是否已安装
 if ! command -v node >/dev/null; then
   echo "Node.js is not installed. Installing it now..."
@@ -92,18 +91,19 @@ fi
 node -v
 npm -v
 
+echo "计算密码."
 npm install bcryptjs
-PASSWORD=$(node -e "console.log(require('bcryptjs').hashSync('password', 8));")
-echo $PASSWORD
+PASSWORD_HASH=$(node -e "console.log(require('bcryptjs').hashSync('$PASSWORD', 8));")
 
 # 进入 Node-RED 容器，并修改 settings.js 配置文件
+echo "写入账户."
 # shellcheck disable=SC1004
 # shellcheck disable=SC2016
-sed -i 's/\/\/adminAuth: {/adminAuth: {\
+sudo sed -i 's/\/\/adminAuth: {/adminAuth: {\
         type: "credentials",\
         users: [{\
             username: "'"$USERNAME"'",\
-            password: "'"$PASSWORD"'",\
+            password: "'"$PASSWORD_HASH"'",\
             permissions: "*"\
         }]\
     },/g' /var/lib/docker/volumes/node_red_data/_data/settings.js
