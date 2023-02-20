@@ -58,15 +58,16 @@ if docker volume ls | grep "$VOLUME_NAME"; then
 fi
 
 # 安装 Node-RED
+# shellcheck disable=SC2086
 docker run -d -it \
   -p 21800:1880 \
   --name mynodered \
   -v node_red_data:/data \
   -e TZ="Asia/Shanghai" \
-  -e NODE_RED_ENABLE_PROJECTS=true \
-  -e NODE_RED_USERNAME="$USERNAME" \
-  -e NODE_RED_PASSWORD="$PASSWORD" \
+  -e NODE_RED_USERNAME=$USERNAME \
+  -e NODE_RED_PASSWORD=$PASSWORD \
   nodered/node-red
+#  -e NODE_RED_ENABLE_PROJECTS=true \
 
 # 输出安装成功信息
 echo "Node-RED 安装成功！"
