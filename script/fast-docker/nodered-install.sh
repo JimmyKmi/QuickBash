@@ -29,7 +29,7 @@ docker run -d -p 21800:1880 \
   nodered/node-red
 
 # 安装 node-red-contrib-credentials 插件
-docker exec -u 0 mynodered npm install -g node-red-contrib-credentials --location=global
+docker exec -u 0 mynodered npm install node-red-contrib-credentials --location=global
 
 # 重启 Node-RED 容器，使修改后的配置生效
 docker restart mynodered
