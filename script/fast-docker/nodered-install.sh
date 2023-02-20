@@ -11,7 +11,7 @@ VOLUME_NAME="node_red_data"
 # 判断数据卷是否存在
 if docker volume ls | grep "$VOLUME_NAME"; then
   # 数据卷存在，询问是否保留数据卷
-  read -t 10 -p "是否保留数据卷 $VOLUME_NAME？[Y/n] " KEEP_VOLUME
+  read -t 20 -p "已有旧node-red数据卷，是否保留数据卷 $VOLUME_NAME？[Y/n] " KEEP_VOLUME
   if [[ "$KEEP_VOLUME" == "n" || "$KEEP_VOLUME" == "N" ]]; then
     # 不保留数据卷，删除数据卷
     docker volume rm "$VOLUME_NAME"
