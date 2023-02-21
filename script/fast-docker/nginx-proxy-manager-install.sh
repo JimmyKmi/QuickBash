@@ -1,11 +1,11 @@
 #!/bin/bash
-# 快速安装 n8n
+# 快速安装 NGINX-PROXY-MANAGER
 
 # 设置服务名称
-VOLUME_NAME="n8n_data"
-SERVICE_NAME="myn8n"
+VOLUME_NAME="nginx-proxy-manager"
+SERVICE_NAME="nginx-proxy-manager"
 
-# 停止并删除旧的 myn8n 容器
+# 停止并删除旧的容器
 docker stop $SERVICE_NAME
 docker rm $SERVICE_NAME
 
@@ -23,15 +23,13 @@ if docker volume ls | grep "$VOLUME_NAME"; then
   fi
 fi
 
-# 安装 n8n
+# 安装
 docker run -d \
-  -p 25678:5678 \
-  --name $SERVICE_NAME \
-  -v n8n_data:/home/node/.n8n \
-  -e NODE_ENV=production \
-  n8nio/n8n \
-  n8n start --tunnel
+  --name=$SERVICE_NAME \
+  -p 8181:8181 \
+  -p 8080:8080 \
+  -p 4443:4443 \
+  -v /docker/appdata/$VOLUME_NAME:/config:rw \
+  jlesage/$VOLUME_NAME
 
-# 输出安装成功信息
-echo "n8n 安装成功！"
-echo "请通过 http://<your_server_ip>:25678 访问 n8n。"
+echo "$SERVICE_NAME 安装成功，访问 https://<IP Address>:8181 进入后台，默认用户名 admin@example.com，默认密码 changeme"

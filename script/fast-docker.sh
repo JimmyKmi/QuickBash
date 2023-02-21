@@ -9,15 +9,13 @@ fi
 
 # 检测网络
 echo "正在检测网络..."
-ping_google_result=$(ping -c 3 -W 1 "www.google.com")                             # 发送3个ICMP报文
+ping_google_result=$(ping -c 3 -W 1 "www.google.com")                        # 发送3个ICMP报文
 avg_google_rtt=$(echo "$ping_google_result" | awk -F/ '/^rtt/ { print $5 }') # 解析输出，提取平均延迟
-
 if [ -z "$avg_google_rtt" ]; then
   echo "海外连接失败..."
   # 检测内地网络
-  ping_baidu_result=$(ping -c 3 -W 1 "www.baidu.com")                             # 发送3个ICMP报文
+  ping_baidu_result=$(ping -c 3 -W 1 "www.baidu.com")                        # 发送3个ICMP报文
   avg_baidu_rtt=$(echo "$ping_baidu_result" | awk -F/ '/^rtt/ { print $5 }') # 解析输出，提取平均延迟
-
   if [ -z "$avg_baidu_rtt" ]; then
     echo "内地连接失败..."
     echo "请检查网络状况."
@@ -32,9 +30,9 @@ else
 fi
 
 # 过滤掉没装 Docker 的小可爱
-if ! command -v docker >/dev/null 2>&1 ; then
-    echo "Docker 未安装."
-    exit
+if ! command -v docker >/dev/null 2>&1; then
+  echo "Docker 未安装."
+  exit
 fi
 
 # 执行程序
@@ -47,16 +45,48 @@ run() {
 menuMain() {
   PS3='[]>' # 设置菜单提示符
   menu=(
-    "安装 NODE-RED"
-    "安装 N8N"
+    "流程 FLOW"
+    "服务 SERVICE"
     "返回")
   select fav in "${menu[@]}"; do # 显示菜单并等待用户输入
     case $fav in
-    "安装 NODE-RED")
-      run nodered-install
+    "流程 FLOW")
+      PS3='[]>' # 设置菜单提示符
+      menu=(
+        "安装 NODE-RED"
+        "安装 N8N"
+        "返回")
+      select fav in "${menu[@]}"; do # 显示菜单并等待用户输入
+        case $fav in
+        "安装 NODE-RED")
+          run nodered-install
+          ;;
+        "安装 N8N")
+          run n8n-install
+          ;;
+        "返回")
+          exit
+          ;;
+        *) echo "VALUE [$REPLY] UNAVAILABLE" ;; # 处理非法输入
+        esac
+      done
       ;;
-    "安装 N8N")
-      run n8n-install
+    "服务 SERVICE")
+      PS3='[]>' # 设置菜单提示符
+      menu=(
+        "CDN服务 NGINX-PROXY-MANAGER"
+        "返回")
+      select fav in "${menu[@]}"; do # 显示菜单并等待用户输入
+        case $fav in
+        "CDN服务 NGINX-PROXY-MANAGER")
+          run nginx-proxy-manager-install
+          ;;
+        "返回")
+          exit
+          ;;
+        *) echo "VALUE [$REPLY] UNAVAILABLE" ;; # 处理非法输入
+        esac
+      done
       ;;
     "返回")
       exit

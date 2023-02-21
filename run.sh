@@ -77,7 +77,7 @@ menuMain() {
         "卸载UI PORTAINER-CE[REMOVE]"
         "更新UI PORTAINER-CE[UPDATE]"
         "安装UI子节点 PORTAINER-AGENT[INSTALL]"
-        "快速服务 FAST-DOCKER"
+        "安装服务 FAST-DOCKER"
         "返回"
       )
       select fav in "${menu[@]}"; do
@@ -106,7 +106,7 @@ menuMain() {
           run docker-ce-install
           run portainer-agent-install
           ;;
-        "快速服务 FAST-DOCKER")
+        "安装服务 FAST-DOCKER")
           run fast-docker
           ;;
         "返回")
