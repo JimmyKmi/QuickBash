@@ -34,6 +34,7 @@ echo "正在添加 docker-ce 的包管理器源..."
 if [ -z "$PACKAGE_TAG" ]; then
   # apt 包管理器
   # 添加 Docker 官方 GPG 密钥
+  sudo apt-get update
   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
   # 添加 Docker 镜像源
   echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
