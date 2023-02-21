@@ -41,29 +41,43 @@ run() {
 menuMain() {
   PS3='[]>' # 设置菜单提示符
   menu=(
-    "更新环境、安装必备程序"
-    "关闭防火墙"
-    "DOCKER"
-    "安装驱动"
-    "将 QuickBash 添加到快捷指令"
+    "系统 SYSTEM"
+    "容器 DOCKER"
+    "驱动 DRIVE"
     "退出")
   select fav in "${menu[@]}"; do # 显示菜单并等待用户输入
     case $fav in
-    "更新环境、安装必备程序")
-      run env
+    "系统 SYSTEM")
+      PS3='[]>'
+      menu=(
+        "安装必备程序"
+        "关闭防火墙"
+        "返回"
+      )
+      select fav in "${menu[@]}"; do
+        case $fav in
+        "安装必备程序")
+          run env
+          ;;
+        "关闭防火墙")
+          run firewall-off
+          ;;
+        "返回")
+          break
+          ;;
+        *) echo "VALUE [$REPLY] UNAVAILABLE" ;; # 处理非法输入
+        esac
+      done
       ;;
-    "关闭防火墙")
-      run firewall-off
-      ;;
-    "DOCKER")
+    "容器 DOCKER")
       PS3='[]>'
       menu=(
         "安装 DOCKER-CE[INSTALL]"
-        "安装 PORTAINER-CE[INSTALL]"
-        "卸载 PORTAINER-CE[REMOVE]"
-        "更新 PORTAINER-CE[UPDATE]"
-        "安装 PORTAINER-AGENT[INSTALL]"
-        "快速添加服务 FAST-DOCKER"
+        "安装UI PORTAINER-CE[INSTALL]"
+        "卸载UI PORTAINER-CE[REMOVE]"
+        "更新UI PORTAINER-CE[UPDATE]"
+        "安装UI子节点 PORTAINER-AGENT[INSTALL]"
+        "快速服务 FAST-DOCKER"
         "返回"
       )
       select fav in "${menu[@]}"; do
@@ -73,26 +87,26 @@ menuMain() {
           run firewall-off
           run docker-ce-install
           ;;
-        "安装 PORTAINER-CE[INSTALL]")
+        "安装UI PORTAINER-CE[INSTALL]")
           run environment
           run firewall-off
           run docker-ce-install
           run portainer-ce-install
           ;;
-        "卸载 PORTAINER-CE[REMOVE]")
+        "卸载UI PORTAINER-CE[REMOVE]")
           run portainer-ce-uninstall
           ;;
-        "更新 PORTAINER-CE[UPDATE]")
+        "更新UI PORTAINER-CE[UPDATE]")
           run portainer-ce-uninstall
           run portainer-ce-install
           ;;
-        "安装 PORTAINER-AGENT[INSTALL]")
+        "安装UI子节点 PORTAINER-AGENT[INSTALL]")
           run environment
           run firewall-off
           run docker-ce-install
           run portainer-agent-install
           ;;
-        "快速添加服务 FAST-DOCKER")
+        "快速服务 FAST-DOCKER")
           run fast-docker
           ;;
         "返回")
@@ -102,7 +116,7 @@ menuMain() {
         esac
       done
       ;;
-    "安装驱动")
+    "驱动 DRIVE")
       PS3='[]>'
       menu=(
         "NVIDIA GPU FOR DOCKER 试验性"
@@ -119,9 +133,6 @@ menuMain() {
         *) echo "VALUE [$REPLY] UNAVAILABLE" ;; # 处理非法输入
         esac
       done
-      ;;
-    "将 QuickBash 添加到快捷指令")
-      run add-quickbash-to-shortcut
       ;;
     "退出")
       exit
