@@ -32,4 +32,4 @@ docker run -d \
   -v /docker/appdata/$VOLUME_NAME:/config:rw \
   jlesage/$VOLUME_NAME
 
-echo "$SERVICE_NAME 安装成功，访问 https://<IP Address>:8181 进入后台，默认用户名 admin@example.com，默认密码 changeme"
+echo "$SERVICE_NAME 安装成功，访问 http://<IP Address>:8181 进入后台，默认用户名 admin@example.com，默认密码 changeme"

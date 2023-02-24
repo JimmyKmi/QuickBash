@@ -57,7 +57,13 @@ fi
 
 # 安装 Docker
 echo "正在安装 Docker..."
-${PACKAGE_HEAD_SHORT} -y install docker-ce "${PACKAGE_TAG}"
+if command -v apt-get &>/dev/null; then
+  # ubuntu
+  ${PACKAGE_HEAD_SHORT} -y install docker-ce "${PACKAGE_TAG}"
+  sudo apt install docker.io
+else
+  ${PACKAGE_HEAD_SHORT} -y install docker-ce "${PACKAGE_TAG}"
+fi
 
 # 启动 Docker
 echo "正在启动 Docker..."
@@ -71,11 +77,7 @@ systemctl enable docker
 cat <<EOF >/etc/docker/daemon.json
 {
   "registry-mirrors": [
-    "https://docker.mirrors.ustc.edu.cn",
-    "https://registry.docker-cn.com",
-    "https://dockerhub.azk8s.cn",
-    "https://hub-mirror.c.163.com",
-    "https://mirror.baidubce.com"
+    "https://registry.docker-cn.com"
   ]
 }
 EOF

@@ -30,7 +30,7 @@ docker run -d \
   -v n8n_data:/home/node/.n8n \
   -e NODE_ENV=production \
   n8nio/n8n \
-  n8n start --tunnel
+  n8n start
 
 # 输出安装成功信息
 echo "n8n 安装成功！"

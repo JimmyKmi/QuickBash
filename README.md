@@ -1,4 +1,4 @@
-# QuickBash 懒虫专用回车
+# QuickBash 快速脚本
 
 语言 / LANGUAGE：[中文](#quickbash-懒虫专用回车) | [English](#quickbash-lazy-mans-enter)
 
