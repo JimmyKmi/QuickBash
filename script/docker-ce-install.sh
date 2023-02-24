@@ -23,7 +23,7 @@ elif command -v apt-get &>/dev/null; then
   PACKAGE_TAG=""
   # 确保包管理器正常
   sudo apt-get update
-  sudo apt-get install apt-transport-https ca-certificates curl gnupg lsb-release
+  sudo apt-get install apt-transport-https ca-certificates curl gnupg lsb-release -y
 else
   echo "系统不在兼容列表"
   exit 1
