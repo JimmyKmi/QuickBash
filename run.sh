@@ -50,16 +50,20 @@ menuMain() {
     "系统 SYSTEM")
       PS3='[]>'
       menu=(
-        "安装必备程序"
-        "关闭防火墙"
+        "安装必备程序 ESSENTIAL"
+        "校时 CLOCK"
+        "关闭防火墙 FIREWALL"
         "返回"
       )
       select fav in "${menu[@]}"; do
         case $fav in
-        "安装必备程序")
+        "安装必备程序 ESSENTIAL")
           run env
           ;;
-        "关闭防火墙")
+        "校时 CLOCK")
+          run clock
+          ;;
+        "关闭防火墙 FIREWALL")
           run firewall-off
           ;;
         "返回")
@@ -83,11 +87,13 @@ menuMain() {
       select fav in "${menu[@]}"; do
         case $fav in
         "安装 DOCKER-CE[INSTALL]")
+          run clock
           run environment
           run firewall-off
           run docker-ce-install
           ;;
         "安装UI PORTAINER-CE[INSTALL]")
+          run clock
           run environment
           run firewall-off
           run docker-ce-install
@@ -101,6 +107,7 @@ menuMain() {
           run portainer-ce-install
           ;;
         "安装UI子节点 PORTAINER-AGENT[INSTALL]")
+          run clock
           run environment
           run firewall-off
           run docker-ce-install

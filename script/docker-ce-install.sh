@@ -35,7 +35,7 @@ if [ -z "$PACKAGE_TAG" ]; then
   # apt 包管理器
   # 添加 Docker 官方 GPG 密钥
   sudo apt-get update
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+  curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg --insecure | sudo apt-key add -
   # 添加 Docker 镜像源
   echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 else
@@ -60,7 +60,13 @@ echo "正在安装 Docker..."
 if command -v apt-get &>/dev/null; then
   # ubuntu
   ${PACKAGE_HEAD_SHORT} -y install docker-ce "${PACKAGE_TAG}"
-  sudo apt-get install docker.io
+  # 识别万恶的树莓派
+  if grep -q "Raspberry Pi\|BCM" /proc/device-tree/model; then
+    if grep -qi "ubuntu" /etc/os-release; then
+      # 树莓派，是你了
+      sudo apt-get install -y docker.io
+    fi
+  fi
 else
   ${PACKAGE_HEAD_SHORT} -y install docker-ce "${PACKAGE_TAG}"
 fi
