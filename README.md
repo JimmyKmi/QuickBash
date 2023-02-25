@@ -24,7 +24,9 @@ QuickBash 可以方便地一键安装这些软件，避免了繁琐的手动配�
 编写过程也非常曲折，看了不少资料最后总结出一个能用的脚本。
 
 ## 如何使用
+### 使用前、提交 ISSUE 前请务必阅读兼容性列表、注意事项
 
+> 
 > 如果服务器在内地 \
 > sudo curl -sSO https://gitee.com/jimmykmi/QuickBash/raw/master/run.sh && bash run.sh && rm run.sh -f
 >
@@ -34,15 +36,29 @@ QuickBash 可以方便地一键安装这些软件，避免了繁琐的手动配�
 
 ## 兼容性列表
 
-> 为空则未测试，兼容则会写上测试系统版本，X->不兼容 \
+> 有这一列就代表理论上兼容，为空则未测试，兼容则会写上测试系统版本，X代表不兼容 \
 > 注意，不兼容指的是脚本不兼容，不代表程序不兼容 \
 > 如果你测试后发现支持，麻烦给我发Issue，我会继续完善这个表
 
 | /               | Alibaba 3  | Alibaba 2 | Anolis 8 | CentOS   | Ubuntu     |
 |-----------------|------------|-----------|----------|----------|------------|
-| DOCKER          | 3.2104 LTS | --        | --       | 8.5 UEFI | 20.04 UEFI |
-| PORTAINER       | 3.2104 LTS | --        | --       | 8.5 UEFI | 20.04 UEFI |
+| 默认              | 3.2104 LTS | --        | --       | 8.5 UEFI | 20.04 UEFI |
 | NVIDIA-GPUS[试验] | --         | --        | --       | --       | 20.04 UEFI |
+
+## 注意事项
+
+### 在生产环境中使用
+作者并不想也不会对你的生产环境担责，使用前请根据下列步骤规避可能的风险。
+1. 作者会在自己的业务使用此脚本，但并不意味着这对你来说绝对没问题，毕竟谁会知道你的系统以前是否有残留的屎山呢？
+2. 建议先 fork 后调用你自己的分支。也可以避免了因为脚本更新而你手快导致安装错东西的情况。
+3. 使用前请仔细阅读脚本所执行的内容。
+4. 此脚本的设计是在虚拟化场景+统一网络管理场景设计的（本地带防火墙机房、阿里云、腾讯云、华为云...），会默认关闭系统中的防火墙，使用统一安全组或出入口防火墙做策略，方便管理。
+如果你需要使用系统的防火墙，请 fork 后自行删除 firewall-off.sh 或修改里面的内容。
+
+### 兼容适配
+1. 如果你的系统是 群晖、HomeAssistant、OpenWrt、iKuai 等一些奇奇怪怪的系统，请不要在这类系统的生产环境中使用此脚本。但是你可以参考里面的指令进行输入。
+2. 后续可能会对群晖做兼容，如果我哪一天头脑发热或者有人给我一个比较好的方案。
+3. 这个脚本可以兼容一些奇奇怪怪的设备树莓派的兼容是试验性的，如果你还要在什么奇奇怪怪的设备上运行欢迎寄给我研究一下（doge
 
 ---
 
@@ -77,6 +93,7 @@ so I decided to make it open source. The writing process was also very tortuous.
 finally came up with a script that works.
 
 ## How to Use
+### Before using and submitting an issue, please be sure to read the compatibility list and notes.
 
 > Using in China Mainland \
 > sudo -i && curl -sSO https://gitee.com/jimmykmi/QuickBash/raw/master/run.sh && bash run.sh && rm run.sh -f
@@ -86,18 +103,25 @@ finally came up with a script that works.
 
 ## Compatibility List
 
-> If the list is empty, it means that the script has not been tested.
->
-> If the system version is listed, it means that the script has been tested and is compatible.
-> If the letter X appears, it means that the script is not compatible with that system.
->
-> Please note that "not compatible" means that the script is not compatible, not that the program is not compatible.
->
-> If you find that the script works on a system that is not listed here, please submit an Issue, and I will continue to
-> improve this table.
+> If this column exists, it means it is theoretically compatible. An empty column means it has not been tested yet. If it is compatible, the tested system version will be written. X means it is not compatible.
+> Note that "not compatible" refers to the script not being compatible, not necessarily the program itself.
+> If you find that it is supported after testing, please create an issue for me, and I will continue to improve this table.
 
-| /                       | Alibaba 3  | Alibaba 2 | Anolis 8 | CentOS   | Ubuntu     |
-|-------------------------|------------|-----------|----------|----------|------------|
-| DOCKER                  | 3.2104 LTS | --        | --       | 8.5 UEFI | 20.04 UEFI |
-| PORTAINER               | 3.2104 LTS | --        | --       | 8.5 UEFI | 20.04 UEFI |
-| NVIDIA-GPUS[EXPERIMENT] | --         | --        | --       | --       | 20.04 UEFI |
+| /                         | Alibaba 3  | Anolis 8 | CentOS   | Ubuntu     |
+|---------------------------|------------|----------|----------|------------|
+| DEFAULT                   | 3.2104 LTS | --       | 8.5 UEFI | 20.04 UEFI |
+| NVIDIA-GPUS[EXPERIMENTAL] | --         | --       | --       | 20.04 UEFI |
+
+## Note
+
+### Use in Production Environment
+The author does not intend and will not be responsible for any issues in your production environment. Please follow the steps below to mitigate any potential risks.
+1. The author uses this script in their own business, but it does not necessarily mean it will work flawlessly for you, as who knows if your system has any hidden issues?
+2. It is recommended to fork the script and use your own branch to avoid accidentally installing the wrong things due to script updates.
+3. Please read the script's execution content carefully before using it.
+4. This script is designed for virtualized + unified network management scenarios (local firewall-equipped data centers, Alibaba Cloud, Tencent Cloud, Huawei Cloud, etc.). It will disable the system firewall by default and use a unified security group or egress/ingress firewall policy for easier management. If you need to use the system firewall, please delete the `firewall-off.sh` or modify its contents after forking.
+
+### Compatibility and Adaptation
+1. If your system is Synology, HomeAssistant, OpenWrt, iKuai, or some other unusual system, do not use this script in a production environment. However, you can refer to the instructions inside for input.
+2. Compatibility with Synology may be added in the future if the author decides to or if someone provides a good solution.
+3. This script's compatibility with some unusual devices such as Raspberry Pi is experimental. If you want to run it on any other unusual device, feel free to send it to me for research. (doge)
