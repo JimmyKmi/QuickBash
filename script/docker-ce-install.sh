@@ -60,7 +60,7 @@ echo "正在安装 Docker..."
 if command -v apt-get &>/dev/null; then
   # ubuntu
   ${PACKAGE_HEAD_SHORT} -y install docker-ce "${PACKAGE_TAG}"
-  sudo apt install docker.io
+  sudo apt-get install docker.io
 else
   ${PACKAGE_HEAD_SHORT} -y install docker-ce "${PACKAGE_TAG}"
 fi
