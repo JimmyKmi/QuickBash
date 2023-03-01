@@ -28,14 +28,20 @@ echo "正在检测网络..."
     export GIT_ADDR="https://gitee.com/jimmykmi/QuickBash/raw/master/script/"
   fi
 }
+echo 2
 
 # 执行函数
 walk() {
   # 从指定URL下载脚本，执行脚本，并删除脚本文件
+  echo 3
   file_path=$1.sh
+  echo 4
   file_local_name=${file_path//\//_}
+  echo 5
   sudo curl -sSO "$file_local_name" $GIT_ADDRESS"$file_path" && bash "$file_local_name" && rm "$file_local_name" -f
 }
+
+echo 1
 
 # 执行程序 %即将弃用
 run() {
