@@ -34,7 +34,7 @@ walk() {
   # 从指定URL下载脚本，执行脚本，并删除脚本文件
   file_path=$1.sh
   file_local_name=${file_path//\//_}
-  sudo curl -sSO "$file_local_name" GIT_ADDRESS"$file_path" && bash "$file_local_name" && rm "$file_local_name" -f
+  sudo curl -sSO "$file_local_name" $GIT_ADDRESS"$file_path" && bash "$file_local_name" && rm "$file_local_name" -f
 }
 
 # 执行程序 %即将弃用
