@@ -12,6 +12,8 @@ run() {
   sudo curl -sSO $GIT_ADDR$1.sh && bash $1.sh && rm $1.sh -f
 }
 
+echo "ADDR::$GIT_ADDR"
+
 # 执行函数
 walk() {
   # 从指定URL下载脚本，执行脚本，并删除脚本文件
