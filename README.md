@@ -33,11 +33,11 @@ QuickBash 可以方便地一键安装这些软件，避免了繁琐的手动配�
 > 
 > 如果服务器在海外 \
 > sudo -i
-> sudo curl -sSL https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/run.sh && bash run.sh && rm run.sh -f
+> sudo curl -sSO https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/run.sh && bash run.sh && rm run.sh -f
 >
 > 测试分支 (千万别在生产环境测试)\
 > sudo -i
-> sudo curl -sSL https://raw.githubusercontent.com/JimmyKmi/QuickBash/dev/run.sh && bash run.sh && rm run.sh -f
+> sudo curl -sSO https://raw.githubusercontent.com/JimmyKmi/QuickBash/dev/run.sh && bash run.sh && rm run.sh -f
 
 ## 兼容性列表
 
@@ -108,7 +108,7 @@ finally came up with a script that works.
 > 
 > Develop \
 > sudo -i
-> sudo curl -sSL https://raw.githubusercontent.com/JimmyKmi/QuickBash/dev/run.sh && bash run.sh && rm run.sh -f
+> sudo curl -sSO https://raw.githubusercontent.com/JimmyKmi/QuickBash/dev/run.sh && bash run.sh && rm run.sh -f
 
 ## Compatibility List
 

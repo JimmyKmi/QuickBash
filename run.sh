@@ -18,7 +18,7 @@ echo "ADDR::$GIT_ADDR"
 walk() {
   # 从指定URL下载脚本，执行脚本，并删除脚本文件
   file_name=$1.sh
-  sudo curl -sSL $GIT_ADDR/"$file_name" -o /dev/null | bash && bash basename "$file_name" && rm basename "$file_name" -f
+  sudo curl -sSO $GIT_ADDR/"$file_name" -o /dev/null | bash && bash basename "$file_name" && rm basename "$file_name" -f
 }
 
 # 网络检测（并获取 git 源）
