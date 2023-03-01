@@ -14,14 +14,14 @@ echo "正在检测网络..."
     echo "网络连接成功."
   else
     echo "网络连接失败..."
-    echo "请检查网络状况."
+    echo "正在检测网络..."
   fi
 } &
 {
   if curl --connect-timeout 3 -sf http://www.google.com/ >/dev/null; then
     echo "不存在干扰，使用 GitHub 源."
     GIT_ADDRESS="https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/script/"
-  GIT_ADDR="https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/script/"
+    GIT_ADDR="https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/script/"
   else
     echo "可能存在干扰，使用 Gitee 源."
     GIT_ADDRESS="https://gitee.com/jimmykmi/QuickBash/raw/master/"
