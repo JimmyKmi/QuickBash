@@ -1,6 +1,9 @@
 #!/bin/bash
 
+VERSION="dev"
+
 # 以管理员权限运行
+# shellcheck disable=SC2046
 if [ $(id -u) -ne 0 ]; then
   echo "请以管理员权限运行 QuickBash."
   exit 1
@@ -20,12 +23,12 @@ echo "正在检测网络..."
 {
   if curl --connect-timeout 3 -sf http://www.google.com/ >/dev/null; then
     echo "不存在干扰，使用 GitHub 源."
-    export GIT_ADDRESS="https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/"
-    export GIT_ADDR="https://raw.githubusercontent.com/JimmyKmi/QuickBash/master/script/"
+    export GIT_ADDRESS="https://raw.githubusercontent.com/JimmyKmi/QuickBash/$VERSION/"
+    export GIT_ADDR="https://raw.githubusercontent.com/JimmyKmi/QuickBash/$VERSION/script/"
   else
     echo "可能存在干扰，使用 Gitee 源."
-    export GIT_ADDRESS="https://gitee.com/jimmykmi/QuickBash/raw/master/"
-    export GIT_ADDR="https://gitee.com/jimmykmi/QuickBash/raw/master/script/"
+    export GIT_ADDRESS="https://gitee.com/jimmykmi/QuickBash/raw/$VERSION/"
+    export GIT_ADDR="https://gitee.com/jimmykmi/QuickBash/raw/$VERSION/script/"
   fi
 }
 
@@ -34,7 +37,8 @@ walk() {
   # 从指定URL下载脚本，执行脚本，并删除脚本文件
   file_path=$1.sh
   file_local_name=${file_path//\//_}
-  sudo curl -sSo "$file_local_name" $GIT_ADDRESS"$file_path" && chmod +x "$file_local_name" && bash "$file_local_name" && rm "$file_local_name" -f
+  echo $GIT_ADDRESS"$file_path"
+  sudo curl -sSo "$file_local_name" $GIT_ADDRESS"$file_path" && bash "$file_local_name" && rm "$file_local_name" -f
 }
 
 # 执行程序 %即将弃用
